@@ -14,11 +14,11 @@
 	- MySQL database named `devdb` and a username of `devdb` having access to it with the password `devdb`
 
 ## Setup
-Edit Vagrantfile to share the 3 folders form your host machine into your VM.  I recommend symlinking folders from your current project to these in your home folder.  Then you can just change the symlinks to move between projects.  If you don't really need a dev database you can probably remove the sqldump and scripts shared folders.
+Edit `Vagrantfile` to share the 3 folders form your host machine into your VM.  I recommend symlinking folders from your current project to these in your home folder.  Then you can just change the symlinks to move between projects.  If you don't really need a dev database you can probably remove the sqldump and scripts shared folders.
 
 These 3 folders are:
 - www
-	- This is the root of the website you want hosted in the VM
+	- This is the web root of the website you want hosted in the VM
 - sqldump
 	- This is where the database SQL file is stored.  Initially it's fine for this to be empty, but if you destory the VM, a sqldump file located here will be imported into the VM's database when it is created.  The file should be named `database.sql`
 - scripts
@@ -44,15 +44,15 @@ Edit your local hosts file to point a domain to `192.168.56.101` then use that d
 - Sets PHP configuration values:
 	- Send mail via MailCatcher
 	- Turns on `display_errors`
-	- Turns on error reporting
-	- Turns on HTML error reporting
+	- Turns on `error_reporting` and sets to development values (display everything)
+	- Turns on `html_errors`
 	- Tells PHP about XDebug
-- Restart Apache
+- Restarts Apache
 
 ## Creating the database dump file
-In case you need some assistance, this command, run from inside the VM, will dump the `devdb` database into a file called `database.sql` and place it into `/var/sqldump/`
+In case you need some assistance, this command, run from inside the VM, will dump the `devdb` database into a file called `database.sql` and place it into `/var/sqldump/` which should be shared to your host computer, thus it will continue to exist even if the VM is destroyed.
 
 `mysqldump -uroot -proot devdb > /var/sqldump/database.sql`
 
-## What is MailCatcher
-Check out the link under VM Description for it.  But the short description is that it catches email being sent by PHP and let's you view it via a web interface (port 1080 on the VM).  This way you don't have to actually send email to yourself.  You can check the queue with your browser easily and clear it whenever you'd like.  You can even send thousands of emails and not worry about a provider getting mad at you, etc.  It's good stuff.
+## What is MailCatcher?
+Check out the [MailCatcher](http://mailcatcher.me/) homepage, but the short description is that it catches email being sent by PHP and let's you view it via a web interface (port 1080 on the VM).  This way you don't have to actually send email through the internet and wait for it to be delivered, etc.  You can check the queue with your browser easily and clear it whenever you'd like.  This also means that you could make your VM send thousands of emails (intentionally or unintentionally) and easily see if they would have been delivered.
