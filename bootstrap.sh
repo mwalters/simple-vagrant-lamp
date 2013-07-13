@@ -3,6 +3,8 @@ sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_aga
 sudo apt-get update
 sudo apt-get -y install mysql-server-5.5 php5-mysql libsqlite3-dev apache2 php5 php5-dev build-essential php-pear
 
+
+# Setup database
 if [ ! -f /var/log/databasesetup ];
 then
     echo "DROP DATABASE IF EXISTS test" | mysql -uroot -proot
@@ -31,23 +33,38 @@ then
 fi
 
 
-# Install/Run Mailcatcher
+# Install Mailcatcher
 if [ ! -f /var/log/mailcatchersetup ];
 then
     sudo /opt/vagrant_ruby/bin/gem install mailcatcher
 
     sudo touch /var/log/mailcatchersetup
 fi
-mailcatcher --http-ip=192.168.56.101
+
 
 # Install xdebug
-sudo pecl install xdebug
-XDEBUG_LOCATION=$(find / -name 'xdebug.so' 2> /dev/null)
+if [ ! -f /var/log/xdebugsetup ];
+then
+    sudo pecl install xdebug
+    XDEBUG_LOCATION=$(find / -name 'xdebug.so' 2> /dev/null)
 
-# Make some final changes
-sudo sed -i '/;sendmail_path =/c sendmail_path = smtp://localhost:1025' /etc/php5/apache2/php.ini
-sudo sed -i '/display_errors = Off/c display_errors = On' /etc/php5/apache2/php.ini
-sudo sed -i '/error_reporting = E_ALL & ~E_DEPRECATED/c error_reporting = E_ALL | E_STRICT' /etc/php5/apache2/php.ini
-sudo sed -i '/html_errors = Off/c html_errors = On' /etc/php5/apache2/php.ini
-echo "zend_extension='$XDEBUG_LOCATION'" | sudo tee -a /etc/php5/apache2/php.ini > /dev/null
+    sudo touch /var/log/xdebugsetup
+fi
+
+
+# Configure PHP
+if [ ! -f /var/log/phpsetup ];
+then
+    sudo sed -i '/;sendmail_path =/c sendmail_path = smtp://localhost:1025' /etc/php5/apache2/php.ini
+    sudo sed -i '/display_errors = Off/c display_errors = On' /etc/php5/apache2/php.ini
+    sudo sed -i '/error_reporting = E_ALL & ~E_DEPRECATED/c error_reporting = E_ALL | E_STRICT' /etc/php5/apache2/php.ini
+    sudo sed -i '/html_errors = Off/c html_errors = On' /etc/php5/apache2/php.ini
+    echo "zend_extension='$XDEBUG_LOCATION'" | sudo tee -a /etc/php5/apache2/php.ini > /dev/null
+
+    sudo touch /var/log/phpsetup
+fi
+
+
+# Make sure things are up and running as they should be
+mailcatcher --http-ip=192.168.56.101
 sudo service apache2 restart
