@@ -35,7 +35,7 @@ Edit your local hosts file to point a domain to `192.168.56.101` then use that d
 - Deletes the `test` database in MySQL
 - Creates the `devdb` MySQL database and user
 - Imports `database.sql` into the `devdb` database if the file exists
-- Sets ServerName for Apach to keep it from complaining
+- Sets ServerName for Apache to keep it from complaining
 - Enables mod_rewrite
 - Allows use of .htaccess files
 - Install MailCatcher
