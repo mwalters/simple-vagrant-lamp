@@ -9,9 +9,9 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--name", "precise64"]
   end
 
-  config.vm.synced_folder "/Users/mwalters/www", "/var/www", id: "vagrant-root"
-  config.vm.synced_folder "/Users/mwalters/sqldump", "/var/sqldump", id: "vagrant-root"
-  config.vm.synced_folder "/Users/mwalters/scripts", "/var/scripts", id: "vagrant-root"
+  config.vm.synced_folder "/Users/mwalters/www", "/var/www"
+  config.vm.synced_folder "/Users/mwalters/sqldump", "/var/sqldump"
+  config.vm.synced_folder "/Users/mwalters/scripts", "/var/scripts"
 
   config.vm.provision :shell, :path => "bootstrap.sh"
 end
