@@ -54,5 +54,8 @@ In case you need some assistance, this command, run from inside the VM, will dum
 
 `mysqldump -uroot -proot devdb > /var/sqldump/database.sql`
 
+## Using MailCatcher
+- Load [http://192.168.56.101:1080/](http://192.168.56.101:1080/) in your browser to view the MailCatcher interface
+
 ## What is MailCatcher?
 Check out the [MailCatcher](http://mailcatcher.me/) homepage, but the short description is that it catches email being sent and let's you view it via a web interface (port 1080 on the VM).  This way you don't have to actually send email through the internet and wait for it to be delivered, etc.  You can check the queue with your browser easily and clear it whenever you'd like.  This also means that you could make your VM send thousands of emails (intentionally or unintentionally) and easily see if they would have been delivered.
