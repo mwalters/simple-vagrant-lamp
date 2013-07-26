@@ -60,7 +60,7 @@ fi
 # Configure PHP
 if [ ! -f /var/log/phpsetup ];
 then
-    sudo sed -i '/;sendmail_path =/c sendmail_path = smtp://localhost:1025' /etc/php5/apache2/php.ini
+    sudo sed -i '/;sendmail_path =/c sendmail_path = "/opt/vagrant_ruby/bin/catchmail"' /etc/php5/apache2/php.ini
     sudo sed -i '/display_errors = Off/c display_errors = On' /etc/php5/apache2/php.ini
     sudo sed -i '/error_reporting = E_ALL & ~E_DEPRECATED/c error_reporting = E_ALL | E_STRICT' /etc/php5/apache2/php.ini
     sudo sed -i '/html_errors = Off/c html_errors = On' /etc/php5/apache2/php.ini
