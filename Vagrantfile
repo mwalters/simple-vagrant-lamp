@@ -1,14 +1,3 @@
-#ensure host sync folders exist before vagrant up
-def ensure_sync_folder(dirname)
-  if !File.directory?(dirname)
-    FileUtils.mkdir_p(dirname)
-  end
-end
-
-ensure_sync_folder('www')
-ensure_sync_folder('sqldump')
-ensure_sync_folder('scripts')
-
 Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
@@ -20,9 +9,9 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--name", "precise64"]
   end
 
-  config.vm.synced_folder "./www", "/var/www"
-  config.vm.synced_folder "./sqldump", "/var/sqldump"
-  config.vm.synced_folder "./scripts", "/var/scripts"
+  config.vm.synced_folder "./www", "/var/www", create: true
+  config.vm.synced_folder "./sqldump", "/var/sqldump", create: true
+  config.vm.synced_folder "./scripts", "/var/scripts", create: true
 
   config.vm.provision :shell, :path => "bootstrap.sh"
 end
