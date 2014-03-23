@@ -14,9 +14,9 @@
 	- MySQL database named `devdb` and a username of `devdb` having access to it with the password `devdb`
 
 ## Setup
-Edit `Vagrantfile` to share the 3 folders form your host machine into your VM.  I recommend symlinking folders from your current project to these in your home folder.  Then you can just change the symlinks to move between projects.  If you don't really need a dev database you can probably remove the sqldump and scripts shared folders.
+The `Vagrantfile` shares 3 folders from your host machine into your VM: `./www`, `./sqldump`, `./scripts`.  If these folders don't exist they will be created when `vagrant up` is run. I recommend symlinking folders from your current project to these in the vagrant folder and then you can just change the symlinks to move between projects - e.g. `ln -fs ~/Sites/dev ./www`. You can do this either before or after `vagrant up`.
 
-These 3 folders are:
+These folders are used as follows:
 - www
 	- This is the web root of the website you want hosted in the VM
 - sqldump
