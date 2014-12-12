@@ -6,3 +6,4 @@ then
     mysql -uroot -proot devdb < /var/sqldump/database.sql
     mv /var/sqldump/database.sql /var/sqldump/$DATE-imported.sql
 fi
+mailcatcher --http-ip=192.168.56.101

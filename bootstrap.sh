@@ -34,5 +34,4 @@ sed -i '/error_reporting = E_ALL & ~E_DEPRECATED/c error_reporting = E_ALL | E_S
 sed -i '/html_errors = Off/c html_errors = On' /etc/php5/apache2/php.ini
 
 # Make sure things are up and running as they should be
-mailcatcher --http-ip=192.168.56.101
 service apache2 restart
